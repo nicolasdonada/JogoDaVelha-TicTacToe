@@ -24,10 +24,11 @@ root.config(bg=cor7)
 root.resizable(width=False, height=False)
 
 
+
+
 #Funções --------------------------------
 def iniciar():
     botao_iniciar.destroy()
-
 
     #Labels -----------------------------
     labels_1 = Label(root, width=39, height=1, text="", bg="white")
@@ -49,6 +50,20 @@ def iniciar():
         botao.place(x=(38 + (i // 3) * 98), y=(190 + (i % 3) * 100))
         botoes.append(botao)
 
+def reiniciar():
+
+    botoes.clear()
+    lista_player1.clear()
+    lista_player2.clear()
+    iniciar()
+
+    placar_1["text"] = 0
+    placar_2["text"] = 0
+    label_gan1 = Label(root, width=30, height=1, text="", bg=cor1)
+    label_gan1.place(x=70, y=140)
+
+    for b in botoes: #SE QUISER DESABILITAR TODOS OS BOTÕES
+        b.config(state=NORMAL)
 
 
 def jogar(num_botao):
@@ -57,24 +72,25 @@ def jogar(num_botao):
     global lista_resp
     global cont
 
+
     botao = botoes[num_botao - 1]  # Obtem o botão correspondente ao número clicado
     cont += 1
 
 
     if not cont % 2 == 0:
-        label_x = Label(botao, width=2,height=1, text="X", anchor="center", relief="flat", font="Ivy 46 bold",fg=cor4, bg="grey")
+        
+        label_x = Label(botao, width=2, height=1, text="X", anchor="center", relief="flat", font="Ivy 46 bold",fg=cor4, bg="grey")
         label_x.grid()
-    else:
-        label_O = Label(botao, width=2,height=1, text="O", anchor="center", relief="flat", font="Ivy 46 bold",fg=cor6, bg="grey")
-        label_O.grid()
 
-    if not cont % 2 == 0:
         lista_player1.append(num_botao)
         print(num_botao)
         cont1 = len(lista_player1)
         placar_1["text"] = cont1
         
     else:
+        label_O = Label(botao, width=2,height=1, text="O", anchor="center", relief="flat", font="Ivy 46 bold",fg=cor6, bg="grey")
+        label_O.grid()
+
         lista_player2.append(num_botao)
         cont2 = len(lista_player2)
         placar_2["text"] = cont2
@@ -83,11 +99,35 @@ def jogar(num_botao):
     
     for resp in lista_resp:
         if set(resp).issubset(lista_player1):
-            print("Jogador 1 ganhou")
+
+            label_gan1 = Label(root, width=21, height=1, text="Jogador 1 GANHOUU!!", bg=cor1, fg=cor4, font="Arial 12 bold")
+            label_gan1.place(x=70, y=140)
+
+            botao_reiniciar = Button(root, width=15, height=1, text="Jogar novamente", anchor="center", bg=cor7, fg="white", font="Ivy 10", command=reiniciar)
+            botao_reiniciar.place(x=116, y=25)
             
+            cont = 0
+            
+
         if set(resp).issubset(lista_player2):
-            print("Jogador 2 ganhou")
-            
+
+            label_gan1 = Label(root, width=21, height=1, text="Jogador 2 GANHOUU!!", bg=cor1, fg=cor6, font="Arial 12 bold")
+            label_gan1.place(x=70, y=140)
+
+            botao_reiniciar = Button(root, width=15, height=1, text="Jogar novamente", anchor="center", bg=cor7, fg="white", font="Ivy 10", command=reiniciar)
+            botao_reiniciar.place(x=116, y=25)
+
+            cont = 0    
+        
+        '''
+            label_gan1 = Label(root, width=21, height=1, text="DEU VELHA!!", bg=cor1, fg=cor6, font="Arial 12 bold")
+            label_gan1.place(x=70, y=140)
+
+            botao_reiniciar = Button(root, width=15, height=2, text="Jogar novamente", anchor="center", bg=cor5, font="Ivy 10", command=iniciar)
+            botao_reiniciar.place(x=20, y=10)
+
+            cont = 0
+            '''
 
     botao.config(state=DISABLED)
 
