@@ -62,6 +62,9 @@ def reiniciar():
     label_gan1 = Label(root, width=30, height=1, text="", bg=cor1)
     label_gan1.place(x=70, y=140)
 
+    label_esconder = Label(root, width=30, height=2, text="", anchor="center", bg=cor1)
+    label_esconder.place(x=116, y=25)
+
     for b in botoes: #SE QUISER DESABILITAR TODOS OS BOTÕES
         b.config(state=NORMAL)
 
@@ -83,7 +86,6 @@ def jogar(num_botao):
         label_x.grid()
 
         lista_player1.append(num_botao)
-        print(num_botao)
         cont1 = len(lista_player1)
         placar_1["text"] = cont1
         
